@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  dev-db:
+    image: mariadb
+    ports:
+      - 3307:3306
+    env_file:
+      - .env.mysql
+    networks:
+      graphql:
+        aliases:
+          - "mysql"
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      - PMA_HOST=mysql
+      - UPLOAD_LIMIT=8192
+    ports:
+      - 81:80
+    networks:
+      - graphql
+networks:
+  graphql:
